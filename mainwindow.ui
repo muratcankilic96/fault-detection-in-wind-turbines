@@ -24,7 +24,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>1</number>
     </property>
     <widget class="QWidget" name="trainTab">
      <attribute name="title">
@@ -142,7 +142,7 @@
       <property name="geometry">
        <rect>
         <x>40</x>
-        <y>200</y>
+        <y>220</y>
         <width>71</width>
         <height>16</height>
        </rect>
@@ -155,7 +155,7 @@
       <property name="geometry">
        <rect>
         <x>120</x>
-        <y>200</y>
+        <y>220</y>
         <width>113</width>
         <height>20</height>
        </rect>
@@ -166,14 +166,14 @@
      </widget>
      <widget class="QTextEdit" name="verboseData">
       <property name="enabled">
-       <bool>false</bool>
+       <bool>true</bool>
       </property>
       <property name="geometry">
        <rect>
         <x>20</x>
-        <y>340</y>
+        <y>370</y>
         <width>501</width>
-        <height>191</height>
+        <height>161</height>
        </rect>
       </property>
       <property name="palette">
@@ -618,6 +618,9 @@
         </disabled>
        </palette>
       </property>
+      <property name="readOnly">
+       <bool>true</bool>
+      </property>
      </widget>
      <widget class="QPushButton" name="trainButton">
       <property name="enabled">
@@ -625,9 +628,9 @@
       </property>
       <property name="geometry">
        <rect>
-        <x>440</x>
-        <y>270</y>
-        <width>75</width>
+        <x>394</x>
+        <y>290</y>
+        <width>141</width>
         <height>23</height>
        </rect>
       </property>
@@ -639,7 +642,7 @@
       <property name="geometry">
        <rect>
         <x>240</x>
-        <y>200</y>
+        <y>220</y>
         <width>75</width>
         <height>23</height>
        </rect>
@@ -652,7 +655,7 @@
       <property name="geometry">
        <rect>
         <x>40</x>
-        <y>270</y>
+        <y>290</y>
         <width>71</width>
         <height>16</height>
        </rect>
@@ -665,7 +668,7 @@
       <property name="geometry">
        <rect>
         <x>110</x>
-        <y>270</y>
+        <y>290</y>
         <width>191</width>
         <height>22</height>
        </rect>
@@ -690,7 +693,7 @@
       <property name="geometry">
        <rect>
         <x>40</x>
-        <y>300</y>
+        <y>320</y>
         <width>71</width>
         <height>16</height>
        </rect>
@@ -703,7 +706,7 @@
       <property name="geometry">
        <rect>
         <x>110</x>
-        <y>300</y>
+        <y>320</y>
         <width>191</width>
         <height>22</height>
        </rect>
@@ -730,21 +733,21 @@
       </property>
       <property name="geometry">
        <rect>
-        <x>440</x>
-        <y>300</y>
-        <width>75</width>
+        <x>394</x>
+        <y>320</y>
+        <width>141</width>
         <height>23</height>
        </rect>
       </property>
       <property name="text">
-       <string>Load File</string>
+       <string>Load Model Directory</string>
       </property>
      </widget>
      <widget class="QCheckBox" name="SMOTECheckBox">
       <property name="geometry">
        <rect>
         <x>320</x>
-        <y>270</y>
+        <y>290</y>
         <width>70</width>
         <height>17</height>
        </rect>
@@ -753,43 +756,43 @@
        <string>SMOTE</string>
       </property>
      </widget>
-     <widget class="QLineEdit" name="trainPath">
+     <widget class="QLineEdit" name="epochEdit">
       <property name="geometry">
        <rect>
-        <x>110</x>
-        <y>240</y>
-        <width>191</width>
+        <x>400</x>
+        <y>220</y>
+        <width>113</width>
         <height>24</height>
        </rect>
       </property>
+      <property name="text">
+       <string>100</string>
+      </property>
      </widget>
-     <widget class="QLabel" name="trainPathText">
+     <widget class="QLabel" name="epochs">
       <property name="geometry">
        <rect>
-        <x>40</x>
-        <y>240</y>
-        <width>191</width>
+        <x>330</x>
+        <y>220</y>
+        <width>71</width>
         <height>16</height>
        </rect>
       </property>
       <property name="text">
-       <string>Model Path</string>
+       <string>Epochs</string>
       </property>
      </widget>
-     <widget class="QPushButton" name="modelPathButton">
-      <property name="enabled">
-       <bool>true</bool>
-      </property>
+     <widget class="QCheckBox" name="deriveTest">
       <property name="geometry">
        <rect>
-        <x>310</x>
-        <y>240</y>
-        <width>75</width>
-        <height>23</height>
+        <x>10</x>
+        <y>180</y>
+        <width>521</width>
+        <height>17</height>
        </rect>
       </property>
       <property name="text">
-       <string>Select</string>
+       <string>Derive from test data for accuracy validation (path must be set from the other tab)</string>
       </property>
      </widget>
     </widget>
@@ -4258,6 +4261,9 @@
       </property>
      </widget>
      <widget class="QPushButton" name="deriveButton_2">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
       <property name="geometry">
        <rect>
         <x>340</x>
@@ -4314,6 +4320,52 @@
      <attribute name="title">
       <string>Graphs</string>
      </attribute>
+     <widget class="QGraphicsView" name="epochInfo">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>50</y>
+        <width>511</width>
+        <height>201</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLabel" name="EpochLabel">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>30</y>
+        <width>471</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Overall training accuracy and loss by epochs</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="EpochLabel_2">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>260</y>
+        <width>471</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Overall validation accuracy and loss by epochs</string>
+      </property>
+     </widget>
+     <widget class="QGraphicsView" name="valInfo">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>280</y>
+        <width>511</width>
+        <height>201</height>
+       </rect>
+      </property>
+     </widget>
     </widget>
    </widget>
   </widget>
