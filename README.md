@@ -3,6 +3,7 @@ A simulation based on the Master's thesis, Fault Detection of Wind Turbines Usin
 
 # Dependencies
 
+- Qt 5
 - Python 3.x
 - Tensorflow 2 C API: https://www.tensorflow.org/install/lang_c
 - Cppflow: https://github.com/serizba/cppflow
