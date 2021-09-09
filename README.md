@@ -10,7 +10,7 @@ A simulation based on the Master's thesis, Fault Detection of Wind Turbines Usin
 
 # Build
 
-The project can be built with *qmake* tool. First, open the .pro file and edit dependency path variables
+The project can be built with *qmake* tool. First, open the .pro file and edit dependency path variables...
 
 ```
 AUBIO_DIR = $$PWD/aubio
@@ -18,6 +18,8 @@ TENSORFLOW_DIR = $$PWD/tensorflow
 CPPFLOW_DIR = $$PWD/cppflow
 
 ```
+
+Then:
 
 ```
 mkdir build
