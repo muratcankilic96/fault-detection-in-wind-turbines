@@ -28,5 +28,6 @@ qmake ..
 make
 ```
 
-References:
+# References:
+
 [1] Kilic, Muratcan. Fault Detection of Wind Turbines Using Deep Learning. MS thesis. Itä-Suomen yliopisto, 2021.
