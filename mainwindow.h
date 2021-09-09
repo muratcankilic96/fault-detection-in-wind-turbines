@@ -4,6 +4,7 @@
 #include "tensorflowpreprocessor.h"
 #include <cppflow/cppflow.h>
 #include <QMainWindow>
+#include <QGraphicsScene>
 #include <QMessageBox>
 #include <QProcess>
 #include <QLineEdit>
@@ -31,7 +32,7 @@ public:
     void process_2_start();
     void process_2_end();
 
-    std::vector<fvec_t *> read_wav_gui(fvec_t * vec, QLineEdit * line, uint_t * sample_rate);
+    std::vector<fvec_t *> read_wav_gui(QLineEdit * line, uint_t * sample_rate);
     std::vector<fmat_t *> create_mfcc_gui(std::vector<fvec_t *> vec, uint_t sample_rate);
     std::vector<fmat_t *> create_spectrogram_gui(std::vector<fvec_t *> vec);
     std::vector<fmat_t *> create_mel_spectrogram_gui(std::vector<fvec_t *> vec);
@@ -41,7 +42,6 @@ public:
 private:
     Ui::MainWindow *ui;
     QProcess * process, * process_2;
-    fvec_t * working_wav, * problematic_wav, * not_working_wav;
     std::vector<fmat_t *> working_mfcc, problematic_mfcc, not_working_mfcc;
     std::vector<fmat_t *> working_spectrogram, problematic_spectrogram, not_working_spectrogram;
     std::vector<fmat_t *> working_mel_spectrogram, problematic_mel_spectrogram, not_working_mel_spectrogram;
@@ -52,7 +52,12 @@ private:
     std::vector<tensor> tensors_saved;
     std::vector<int> model_id_saved;
 
+    QGraphicsScene * scene_1;
+    QGraphicsScene * scene_2;
+
     QMessageBox wait;
+
+    void mass_leak_clear();
 
     void file_select_button_clicked(QLineEdit * line);
     void derive_data_button_clicked();
@@ -60,5 +65,6 @@ private:
     void test_accuracy_button_clicked();
     void train_button_clicked();
     void load_button_clicked();
+    void graph_load_button_clicked();
 };
 #endif // MAINWINDOW_H

@@ -6,6 +6,8 @@ import oversampling
 import os
 import os.path
 
+DELETE_AFTER_USE = True
+
 path_prelim = '../'
 test_fname= path_prelim + 'test.json'
 
@@ -51,3 +53,6 @@ if(os.path.isfile(test_fname)):
     
     with open('../test_out.json', 'w') as out_f:
         json.dump(output, out_f)
+        
+    if(DELETE_AFTER_USE):
+        os.remove(test_fname)

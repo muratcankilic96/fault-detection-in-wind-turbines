@@ -27,7 +27,10 @@ fvec_t * read_wav_file(std::string filename, uint_t * sample_rate) {
     *sample_rate = aubio_source_get_samplerate(wav_file);
 
     // Destroy unused objects.
-    del_fvec(wav_array);
+    delete wav_array->data;
+    wav_array->data = nullptr;
+    delete wav_array;
+    wav_array = nullptr;
     aubio_source_close(wav_file);
 
     // Return the float vector.
@@ -54,7 +57,33 @@ std::vector<fvec_t *> slice_fvec(fvec_t * read, uint_t chunk_size) {
             out[i]->data[j] = read->data[x++];
         }
     }
-
-
     return out;
+}
+
+// Memory management: Clears a vector of fvec_t object.
+
+void del_fvec_vector(std::vector<fvec_t *> * vec) {
+    for(int i = 0; i < (*vec).size(); i++) {
+        delete (*vec)[i]->data;
+        (*vec)[i]->data = nullptr;
+        delete (*vec)[i];
+        (*vec)[i] = nullptr;
+    }
+    (*vec).clear();
+}
+
+// Memory management: Clears a vector of fmat_t object.
+
+void del_fmat_vector(std::vector<fmat_t *> * mat) {
+    for(int i = 0; i < (*mat).size(); i++) {
+        for(int j = 0; j < (*mat)[i]->height; j++) {
+            delete (*mat)[i]->data[j];
+            (*mat)[i]->data[j] = nullptr;
+        }
+        delete (*mat)[i]->data;
+        (*mat)[i]->data = nullptr;
+        delete (*mat)[i];
+        (*mat)[i] = nullptr;
+    }
+    (*mat).clear();
 }

@@ -2,7 +2,7 @@
 from tensorflow.keras.models import Sequential
 from tensorflow.keras import regularizers
 from tensorflow.keras.layers import (Dense, Conv2D, Flatten, MaxPooling2D, BatchNormalization, LeakyReLU, 
-SpatialDropout2D, RNN, SimpleRNNCell, LSTM, Dropout)
+SpatialDropout2D, RNN, SimpleRNNCell, LSTM, Dropout, Input)
 
 class ModelDefinitions:
     
@@ -19,7 +19,8 @@ class ModelDefinitions:
     @staticmethod
     def callMFCC_CNN():
       model = Sequential()
-      model.add(Conv2D(32, kernel_size=3, input_shape=(ModelDefinitions.mfcc_length,ModelDefinitions.mfcc_width,1), kernel_regularizer=regularizers.l2(0.0005)))
+      model.add(Input(shape=(ModelDefinitions.mfcc_length,ModelDefinitions.mfcc_width,1)))
+      model.add(Conv2D(32, kernel_size=3, kernel_regularizer=regularizers.l2(0.0005)))
       model.add(LeakyReLU(alpha=0.1))
       model.add(BatchNormalization())
       model.add(SpatialDropout2D(0.07))
@@ -46,7 +47,8 @@ class ModelDefinitions:
     @staticmethod
     def callSpectrogram_CNN():
       model = Sequential()
-      model.add(Conv2D(32, kernel_size=3, input_shape=(ModelDefinitions.spectro_length,ModelDefinitions.spectro_width,1), kernel_regularizer=regularizers.l2(0.0005)))
+      model.add(Input(shape=(ModelDefinitions.spectro_length,ModelDefinitions.spectro_width,1)))
+      model.add(Conv2D(32, kernel_size=3, kernel_regularizer=regularizers.l2(0.0005)))
       model.add(LeakyReLU(alpha=0.1))
       model.add(Conv2D(32, kernel_size=3, kernel_regularizer=regularizers.l2(0.0005)))
       model.add(LeakyReLU(alpha=0.1))
@@ -65,7 +67,8 @@ class ModelDefinitions:
     @staticmethod
     def callMelSpectrogram_CNN():
       model = Sequential()
-      model.add(Conv2D(50, kernel_size=5, activation='relu', input_shape=(ModelDefinitions.mel_spectro_length,ModelDefinitionsmel_spectro_width,1), kernel_regularizer=regularizers.l2(0.0005)))
+      model.add(Input(shape=(ModelDefinitions.mel_spectro_length,ModelDefinitions.mel_spectro_width,1)))
+      model.add(Conv2D(50, kernel_size=5, activation='relu', kernel_regularizer=regularizers.l2(0.0005)))
       model.add(Conv2D(100, kernel_size=3, activation='relu', kernel_regularizer=regularizers.l2(0.0005)))
       model.add(MaxPooling2D())
       model.add(Conv2D(200, kernel_size=3, activation='relu', kernel_regularizer=regularizers.l2(0.0005)))
@@ -80,7 +83,8 @@ class ModelDefinitions:
     @staticmethod
     def callMFCC_RNN():
       model = Sequential()
-      model.add(RNN(SimpleRNNCell(100), input_shape=(ModelDefinitions.mfcc_length, ModelDefinitions.mfcc_width), return_sequences=True))
+      model.add(Input(shape=(ModelDefinitions.mfcc_length, ModelDefinitions.mfcc_width)))
+      model.add(RNN(SimpleRNNCell(100), return_sequences=True))
       model.add(RNN(SimpleRNNCell(100), return_sequences=False))
       model.add(Dropout(0.1))
       model.add(Dense(3, activation='softmax'))
@@ -92,7 +96,8 @@ class ModelDefinitions:
     @staticmethod
     def callSpectrogram_RNN():
       model = Sequential()
-      model.add(RNN(SimpleRNNCell(100), input_shape=(ModelDefinitions.spectro_length, ModelDefinitions.spectro_width), return_sequences=True))
+      model.add(Input(shape=(ModelDefinitions.spectro_length, ModelDefinitions.spectro_width)))
+      model.add(RNN(SimpleRNNCell(100), return_sequences=True))
       model.add(RNN(SimpleRNNCell(100), return_sequences=False))
       model.add(Dropout(0.1))
       model.add(Dense(3, activation='softmax'))
@@ -104,7 +109,8 @@ class ModelDefinitions:
     @staticmethod
     def callMelSpectrogram_RNN():
       model = Sequential()
-      model.add(RNN(SimpleRNNCell(256), input_shape=(ModelDefinitions.mel_spectro_length, ModelDefinitions.mel_spectro_width)))
+      model.add(Input(shape=(ModelDefinitions.mel_spectro_length, ModelDefinitions.mel_spectro_width)))
+      model.add(RNN(SimpleRNNCell(256)))
       model.add(Dense(64, activation='relu'))
       model.add(Dense(3, activation='softmax'))
       model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
@@ -115,7 +121,8 @@ class ModelDefinitions:
     @staticmethod
     def callMFCC_LSTM():
       model = Sequential()
-      model.add(LSTM(100, input_shape=(ModelDefinitions.mfcc_length, ModelDefinitions.mfcc_width), return_sequences=True))
+      model.add(Input(shape=(ModelDefinitions.mfcc_length, ModelDefinitions.mfcc_width)))
+      model.add(LSTM(100, return_sequences=True))
       model.add(LSTM(100, return_sequences=False))
       model.add(Dropout(0.1))
       model.add(Dense(3, activation='softmax'))
@@ -126,6 +133,7 @@ class ModelDefinitions:
     @staticmethod
     def callSpectrogram_LSTM():
       model = Sequential()
+      model.add(Input())
       model.add(LSTM(512))
       model.add(Dense(3, activation='softmax'))
       model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
@@ -135,6 +143,7 @@ class ModelDefinitions:
     @staticmethod
     def callMelSpectrogram_LSTM():
       model = Sequential()
+      model.add(Input())
       model.add(LSTM(128, return_sequences=True))
       model.add(RNN(SimpleRNNCell(128), return_sequences=True))
       model.add(LSTM(128, return_sequences=True))

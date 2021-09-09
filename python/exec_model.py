@@ -6,7 +6,8 @@ import tensorflow.keras
 import oversampling
 import os
 import os.path
-
+from matplotlib import pyplot as plt
+    
 DELETE_AFTER_USE = True
 
 funcs = [ModelDefinitions.callMFCC_CNN, ModelDefinitions.callSpectrogram_CNN, ModelDefinitions.callMelSpectrogram_CNN,
@@ -94,19 +95,42 @@ if(os.path.isfile(test_fname)):
         x_test, y_test = oversampling.oversampling(x_test, y_test)
 
 if(os.path.isfile(train_fname)):
-    if(model_id > 6):
+    if(model_id > 3):
         x_train = x_train.reshape((x_train.shape[0], x_train.shape[1], x_train.shape[2]))
     if(os.path.isfile(test_fname)):
-        x_test = x_test.reshape((x_test.shape[0], x_test.shape[1], x_test.shape[2]))
-        model.fit(x_train, y_train, epochs=epoch_count, validation_data=(x_test, y_test))
+        if(model_id > 3):
+            x_test = x_test.reshape((x_test.shape[0], x_test.shape[1], x_test.shape[2]))
+        history = model.fit(x_train, y_train, epochs=epoch_count, validation_data=(x_test, y_test))
     else:
-        model.fit(x_train, y_train, epochs=epoch_count)
+        history = model.fit(x_train, y_train, epochs=epoch_count)
+    his = history.history
     md_path = '../models/model_' + str(model_id)
     model.save(md_path, save_format='tf')
     
     write_to = open(md_path + "/.MODELID", "w")
     write_to.write(str(model_id))
     write_to.close()
+    
+    his_loss = his["loss"]
+    his_accuracy = his["accuracy"]
+    plt.plot(range(len(his_loss)), his_loss, label = "loss")
+    plt.plot(range(len(his_accuracy)), his_accuracy, label = "accuracy")
+    plt.ylabel('Training loss and accuracy')
+    plt.xlabel('Epochs')
+    plt.savefig(md_path + "/loss_acc.png");
+    
+    plt.clf()
+    
+    if("val_loss" in his and "val_accuracy" in his):
+        his_val_loss = his["val_loss"]
+        his_val_accuracy = his["val_accuracy"]
+        plt.plot(range(len(his_val_loss)), his_val_loss, label = "loss")
+        plt.plot(range(len(his_val_accuracy)), his_val_accuracy, label = "accuracy")
+        plt.ylabel('Validation loss and accuracy')
+        plt.xlabel('Epochs')
+        plt.savefig(md_path + "/val_loss_acc.png");
+        
+        plt.clf()
 
 if(DELETE_AFTER_USE):
     if(os.path.isfile(train_fname)):

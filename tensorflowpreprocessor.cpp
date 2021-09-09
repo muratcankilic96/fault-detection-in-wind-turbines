@@ -54,8 +54,8 @@ tensor TensorflowPreprocessor::min_max_scaling(tensor t, float lower_bound, floa
     auto d2 = shape.get_data<int64_t>()[1];
     auto d3 = shape.get_data<int64_t>()[2];
 
-    int max_v = index[0];
-    int min_v = index[0];
+    float max_v = index[0];
+    float min_v = index[0];
 
     for(int i = 0; i < index.size(); i++) {
         if(index[i] > max_v)
@@ -117,6 +117,7 @@ void TensorflowPreprocessor::to_json(std::string filename, std::vector<tensor> t
         json_file << ",\n";
         json_file << "  \"epoch\": " << epoch_count << "\n";
         json_file << "}";
+        json_file.close();
     } else
         std::cout << "Error opening the file" << std::endl;
 }
@@ -187,7 +188,7 @@ std::vector<tensor> TensorflowPreprocessor::from_json(std::string filename) {
             tensors.push_back(t);
         }
 
-        remove(path.parent_path() / "WindTurbineSimulationLinux" / filename);
+        remove(path.parent_path() / filename);
 
         return tensors;
     } else {
@@ -199,7 +200,6 @@ std::vector<tensor> TensorflowPreprocessor::from_json(std::string filename) {
 // Ignores all dimensions larger than 3D.
 tensor TensorflowPreprocessor::reshape_dims_to_3d(tensor t) {
     auto index = t.get_data<float>();
-    int x = 0;
     auto shape = t.shape();
     auto d1 = shape.get_data<int64_t>()[0];
     auto d2 = shape.get_data<int64_t>()[1];
