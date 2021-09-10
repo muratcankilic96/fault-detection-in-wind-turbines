@@ -22,7 +22,8 @@ fmat_t * DspTools::create_mfcc(fvec_t * source, uint_t sample_size, uint_t nfilt
     // Apply MFCC for each passing window. Note that there is no implementation for overlap.
     fvec_t * mfcc_window_input, * mfcc_output;
     do {
-        mfcc_window_input = new_fvec(wlen), mfcc_output = new_fvec(cep_count);
+        mfcc_window_input = new_fvec(wlen);
+        mfcc_output = new_fvec(cep_count);
         for(int i = 0; i < wlen; i++) {
             mfcc_window_input->data[i] = source->data[x];
             x = x + 1;
@@ -33,21 +34,13 @@ fmat_t * DspTools::create_mfcc(fvec_t * source, uint_t sample_size, uint_t nfilt
             whole->data[read][i] = mfcc_output->data[i];
         }
         read++;
+        // Destroy unused variables for each iteration. [[UPDATE 10 September 2021 MEMORY LEAK FIX]]
+        del_fvec(mfcc_window_input);
+        del_fvec(mfcc_output);
     } while(read != frames);
 
     // Destroy unused variables.
-    delete mfcc_window_input->data;
-    mfcc_window_input->data = nullptr;
-    delete mfcc_window_input;
-    mfcc_window_input = nullptr;
-    delete mfcc_output->data;
-    delete mfcc_output;
-    delete window_part->norm;
-    delete window_part->phas;
-    window_part->norm = nullptr;
-    window_part->phas = nullptr;
-    delete window_part;
-    window_part = nullptr;
+    del_cvec(window_part);
     del_aubio_mfcc(mfcc);
     del_aubio_pvoc(phase_vocoder);
 
@@ -97,16 +90,8 @@ fmat_t * DspTools::create_spectrogram(fvec_t * source, uint_t nfft) {
     }
 
     // Destroy unused variables.
-    delete fft_window_input->data;
-    fft_window_input->data = nullptr;
-    delete fft_window_input;
-    fft_window_input = nullptr;
-    delete window_part->norm;
-    delete window_part->phas;
-    window_part->norm = nullptr;
-    window_part->phas = nullptr;
-    delete window_part;
-    window_part = nullptr;
+    del_fvec(fft_window_input);
+    del_cvec(window_part);
     del_aubio_fft(fft);
 
     // Return the MFCC matrix.
@@ -161,16 +146,8 @@ fmat_t * DspTools::create_mel_spectrogram(fvec_t * source, uint_t nfft) {
     }
 
     // Destroy unused variables.
-    delete fft_window_input->data;
-    fft_window_input->data = nullptr;
-    delete fft_window_input;
-    fft_window_input = nullptr;
-    delete window_part->norm;
-    delete window_part->phas;
-    window_part->norm = nullptr;
-    window_part->phas = nullptr;
-    delete window_part;
-    window_part = nullptr;
+    del_fvec(fft_window_input);
+    del_cvec(window_part);
     del_aubio_fft(fft);
 
     // Return the MFCC matrix.

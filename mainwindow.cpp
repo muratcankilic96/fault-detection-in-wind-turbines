@@ -68,10 +68,8 @@ std::vector<fvec_t *> MainWindow::read_wav_gui(QLineEdit * line, uint_t * sample
 
     std::vector<fvec_t *> mat = slice_fvec(vec, ui->chunkEdit->text().toUInt());
 
-    delete vec->data;
-    vec->data = nullptr;
-    delete vec;
-    vec = nullptr;
+    // Remove unused fvec_t object.
+    del_fvec(vec);
 
     if(!mat.empty()) std::cout << "Slicing complete." << std::endl;
     else
@@ -518,14 +516,6 @@ void MainWindow::graph_load_button_clicked() {
 }
 
 void MainWindow::mass_leak_clear() {
-    if(process != nullptr) {
-        delete process;
-        process = nullptr;
-    }
-    if(process_2 != nullptr) {
-        delete process_2;
-        process_2 = nullptr;
-    }
     if(!working_mfcc.empty()) del_fmat_vector(&working_mfcc);
     if(!problematic_mfcc.empty()) del_fmat_vector(&problematic_mfcc);
     if(!not_working_mfcc.empty()) del_fmat_vector(&not_working_mfcc);
