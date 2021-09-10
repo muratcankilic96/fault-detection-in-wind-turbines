@@ -5,6 +5,12 @@ A simulation based on the Master's thesis, Fault Detection of Wind Turbines Usin
 
 - Qt 5
 - Python 3.x
+- Python libraries:
+  - Numpy
+  - Tensorflow
+  - Keras
+  - imblearn
+  - matplotlib
 - Tensorflow 2 C API: https://www.tensorflow.org/install/lang_c
 - Cppflow: https://github.com/serizba/cppflow
 - Aubio 0.49: https://github.com/aubio/aubio
