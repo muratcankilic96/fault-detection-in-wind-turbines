@@ -1,5 +1,7 @@
 # Fault Detection in Wind Turbines
-A simulation based on the Master's thesis, Fault Detection of Wind Turbines Using Deep Learning[1]. The models consist of three categories:
+A simulation based on the Master's thesis, Fault Detection of Wind Turbines Using Deep Learning[1]. 
+
+The models consist of three categories:
 - Working
 - Problematic
 - Not Working
