@@ -41,9 +41,10 @@ Then:
 ```
 mkdir build
 cd build
-qmake ..
-make install
+qmake .. -spec linux-g++ CONFIG+=qtquickcompiler
+make
 ```
+Or you can use Qt Creator interface.
 
 # References:
 
