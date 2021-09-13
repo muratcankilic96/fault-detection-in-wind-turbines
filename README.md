@@ -42,7 +42,7 @@ Then:
 mkdir build
 cd build
 qmake ..
-make
+make install
 ```
 
 # References:
