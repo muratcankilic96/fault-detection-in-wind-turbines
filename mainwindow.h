@@ -42,23 +42,41 @@ public:
 private:
     Ui::MainWindow *ui;
     QProcess * process, * process_2;
+
+    // The containers for the MFCC, spectrogram, and Mel spectrogram representations of three classes.
     std::vector<fmat_t *> working_mfcc, problematic_mfcc, not_working_mfcc;
     std::vector<fmat_t *> working_spectrogram, problematic_spectrogram, not_working_spectrogram;
     std::vector<fmat_t *> working_mel_spectrogram, problematic_mel_spectrogram, not_working_mel_spectrogram;
+
+    // The containers for sliced signals.
     std::vector<fvec_t *> working_mat, problematic_mat, not_working_mat;
+
+    // Samples rates taken from WAV files.
     uint_t working_sample_rate, problematic_sample_rate, not_working_sample_rate;
+
+    // A set to prevent the existence of duplicate paths.
     std::set<std::string> model_paths;
+
+    // List of models.
     std::vector<cppflow::model> models;
+
+    // List of saved tensors for testing the models.
     std::vector<tensor> tensors_saved;
+
+    // List of identifiers of models.
     std::vector<int> model_id_saved;
 
+    // Load PNG files for graphs.
     QGraphicsScene * scene_1;
     QGraphicsScene * scene_2;
 
+    // Create a "please wait" message.
     QMessageBox wait;
 
+    // Clear all zleak.
     void mass_leak_clear();
 
+    // Functions for several button events.
     void file_select_button_clicked(QLineEdit * line);
     void derive_data_button_clicked();
     void test_derive_data_button_clicked();
