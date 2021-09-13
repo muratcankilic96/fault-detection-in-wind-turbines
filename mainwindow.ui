@@ -832,7 +832,7 @@
        </rect>
       </property>
       <property name="text">
-       <string>Working Wind Turbine Training Data Path</string>
+       <string>Working Wind Turbine Test Data Path</string>
       </property>
      </widget>
      <widget class="QLabel" name="notWorkingTestLabel">
@@ -845,7 +845,7 @@
        </rect>
       </property>
       <property name="text">
-       <string>Not Working Wind Turbine Training Data Path</string>
+       <string>Not Working Wind Turbine Test Data Path</string>
       </property>
      </widget>
      <widget class="QLabel" name="problematicTestLabel">
@@ -858,7 +858,7 @@
        </rect>
       </property>
       <property name="text">
-       <string>Problematic Wind Turbine Training Data Path</string>
+       <string>Problematic Wind Turbine Test  Data Path</string>
       </property>
      </widget>
      <widget class="QPushButton" name="notWorkingTestButton">
