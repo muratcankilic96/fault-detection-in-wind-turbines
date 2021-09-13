@@ -36,13 +36,13 @@ qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
-unix:!macx: LIBS += -L$$AUBIO_DIR/src/ -laubio
+unix:!macx: LIBS += -L$${AUBIO_DIR}/build/src/ -laubio
 
 INCLUDEPATH += $$PWD/aubio/src
 DEPENDPATH += $$PWD/aubio/src
 
-unix:!macx: LIBS += -L$$TENSORFLOW_DIR/lib -ltensorflow_framework -ltensorflow
+unix:!macx: LIBS += -L$${TENSORFLOW_DIR}/lib -ltensorflow_framework -ltensorflow
 
-INCLUDEPATH += $$TENSORFLOW_DIR/include
-INCLUDEPATH += $$CPPFLOW_DIR/include
-DEPENDPATH += $$TENSORFLOW_DIR/include
+INCLUDEPATH += $${TENSORFLOW_DIR}/include
+INCLUDEPATH += $${CPPFLOW_DIR}/include
+DEPENDPATH += $${TENSORFLOW_DIR}/include
