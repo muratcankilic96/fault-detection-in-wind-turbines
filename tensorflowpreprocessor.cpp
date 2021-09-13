@@ -261,6 +261,8 @@ tensor TensorflowPreprocessor::reshape_dims_to_3d(tensor t) {
     auto d1 = shape.get_data<int64_t>()[0];
     auto d2 = shape.get_data<int64_t>()[1];
     auto d3 = shape.get_data<int64_t>()[2];
+    // Resize the flat array. [[UPDATE 13 September 2021 OUT OF BOUNDS FIX]]
+    index.resize(d1 * d2 * d3);
     // Create a new tensor from start.
     tensor t_new = cppflow::tensor(index, {d1, d2, d3});
     // Return the tensor.
