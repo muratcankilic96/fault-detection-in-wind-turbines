@@ -73,7 +73,7 @@ private:
     // Create a "please wait" message.
     QMessageBox wait;
 
-    // Clear all zleak.
+    // Clear all leak.
     void mass_leak_clear();
 
     // Functions for several button events.
